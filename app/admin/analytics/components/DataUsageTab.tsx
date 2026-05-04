@@ -6,7 +6,7 @@ import {
   Legend, Cell, Brush, LineChart, Line
 } from "recharts"
 import { 
-  Filter, Calendar, Users, MousePointerSquare, FileText,
+  Filter, Calendar, Users, MousePointer, FileText,
   Clock, BarChart3, Search, Activity, ChevronDown
 } from "lucide-react"
 import { 
