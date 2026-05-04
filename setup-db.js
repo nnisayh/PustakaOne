@@ -1,13 +1,14 @@
 import mysql from "mysql2/promise";
+import "dotenv/config";
 
 async function setupDatabase() {
   try {
     console.log("Menghubungkan ke server MySQL...");
-    // Connect without specifying a database to create it first
+    // Connect using environment variables or fallbacks
     const connection = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "Irsyad123@",
+      host: process.env.DB_HOST || "localhost",
+      user: process.env.DB_USER || "pustaka_admin",
+      password: process.env.DB_PASSWORD || "PasswordPustaka123!",
     });
 
     console.log("Berhasil terhubung ke MySQL.");
