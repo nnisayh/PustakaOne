@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@source "../app";
+@source "../components";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Template Theme Config */
+  --color-inverse-surface: #2d3133;
+  --color-tertiary-container: #4f2e00;
+  --color-on-error-container: #93000a;
+  --color-on-surface-variant: #43474e;
+  --color-on-secondary-fixed-variant: #3c475a;
+  --color-primary-fixed-dim: #adc7f7;
+  --color-on-surface: #181c1e;
+  --color-on-secondary: #ffffff;
+  --color-secondary: #545f72;
+  --color-tertiary-fixed-dim: #f2bc82;
+  --color-on-primary-fixed-variant: #2d476f;
+  --color-on-tertiary-fixed-variant: #633f0f;
+  --color-surface-container-low: #f1f4f6;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-background: #181c1e;
+  --color-tertiary-fixed: #ffddba;
+  --color-inverse-primary: #adc7f7;
+  --color-surface-variant: #e0e3e5;
+  --color-error: #ba1a1a;
+  --color-tertiary: #321b00;
+  --color-on-tertiary-fixed: #2b1700;
+  --color-secondary-fixed-dim: #bcc7dd;
+  --color-on-secondary-fixed: #111c2c;
+  --color-on-primary: #ffffff;
+  --color-surface-tint: #455f88;
+  --color-on-tertiary: #ffffff;
+  --color-on-error: #ffffff;
+  --color-surface-container-high: #e5e9eb;
+  --color-surface-bright: #f7fafc;
+  --color-error-container: #ffdad6;
+  --color-secondary-container: #d5e0f7;
+  --color-outline-variant: #c4c6cf;
+  --color-primary-fixed: #d6e3ff;
+  --color-on-tertiary-container: #c6955e;
+  --color-surface-container-highest: #e0e3e5;
+  --color-inverse-on-surface: #eef1f3;
+  --color-outline: #74777f;
+  --color-on-secondary-container: #586377;
+  --color-primary: #002045;
+  --color-surface-dim: #d7dadc;
+  --color-secondary-fixed: #d8e3fa;
+  --color-surface: #f7fafc;
+  --color-on-primary-fixed: #001b3c;
+  --color-on-primary-container: #86a0cd;
+  --color-primary-container: #1a365d;
+  --color-surface-container: #ebeef0;
+
+  --radius-DEFAULT: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+
+  --font-headline: "Newsreader", serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  /* Admin Dashboard Theme Tokens */
+  --color-admin-primary: #2d78f2;
+  --color-admin-primary-2: #2ac9fa;
+  --color-admin-primary-3: #2ac9fa;
+  --color-admin-primary-4: #7fc9fb;
+  --color-admin-surface: #f6f6f6;
+  
+  /* Map original names if they don't conflict, or provide specific ones */
+  --color-primary-blue: #2d78f2;
+  --color-primary-cyan: #2ac9fa;
+}
+
+/* Admin Specific Animations & Utilities */
+@keyframes panelSlideDown { 
+  from { opacity: 0; transform: translateY(-24px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+.page-content { 
+  animation: panelSlideDown 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; 
+}
+
+.stat-card { 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  position: relative;
+  overflow: hidden;
+}
+.stat-card:hover { 
+  transform: translateY(-4px); 
+  box-shadow: 0 12px 30px rgba(45,120,242,0.25); 
+}
+.stat-card .blob { 
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+  position: absolute; 
+  border-radius: 50%; 
+  pointer-events: none; 
+}
+.stat-card:hover .blob-1 { transform: translate(-10px, -8px) scale(1.15); }
+.stat-card:hover .blob-2 { transform: translate(12px, 4px) scale(1.1) rotate(15deg); }
+.stat-card:hover .blob-3 { transform: translate(6px, 10px) scale(0.9); }
+
+.sidebar { 
+  transition: width 0.3s ease; 
+  overflow: hidden; 
+}
+.sidebar .menu-label { 
+  transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s; 
+}
+.sidebar.collapsed .menu-label { 
+  opacity: 0; 
+  transform: translateX(-8px); 
+  pointer-events: none; 
+}
+.sidebar.expanded .menu-label { 
+  opacity: 1; 
+  transform: translateX(0); 
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animation Utilities */
+.animate-in {
+  animation-duration: 500ms;
+  animation-fill-mode: both;
+}
+.fade-in {
+  animation-name: fadeIn;
+}
+.slide-in-from-bottom-4 {
+  animation-name: slideInFromBottom4;
+}
+.slide-in-from-bottom-8 {
+  animation-name: slideInFromBottom8;
+}
+.slide-in-from-top-3 {
+  animation-name: slideInFromTop3;
+}
+.slide-in-from-top-4 {
+  animation-name: slideInFromTop4;
+}
+.zoom-in-95 {
+  animation-name: zoomIn95;
+}
+.duration-200 {
+  animation-duration: 200ms;
+}
+.duration-300 {
+  animation-duration: 300ms;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideInFromBottom4 {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideInFromBottom8 {
+  from { transform: translateY(32px); opacity: 0; filter: blur(4px); }
+  to { transform: translateY(0); opacity: 1; filter: blur(0px); }
+}
+@keyframes slideInFromTop3 {
+  from { transform: translateY(-12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideInFromTop4 {
+  from { transform: translateY(-16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes zoomIn95 {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.bg-glass {
+  background: rgba(247, 250, 252, 0.8);
+  backdrop-filter: blur(20px);
+}
+
+/* Global Admin Mode Theme Override */
+.admin-mode {
+  --color-primary: #2d78f2 !important;
+  --color-primary-2: #2ac9fa !important;
+  --color-primary-3: #2ac9fa !important;
+  --color-primary-4: #7fc9fb !important;
+  --color-surface: #f6f6f6 !important;
+  --color-white: #ffffff !important;
+  --color-slate-50: #f6f7fb !important;
+  --color-slate-100: #eef0f6 !important;
+  --font-sans: var(--font-jakarta-sans) !important;
+}
+
+.admin-mode body {
+  font-family: var(--font-jakarta-sans), system-ui, -apple-system, sans-serif !important;
+}
+
+.admin-mode *:not(.material-symbols-outlined) {
+  font-family: inherit;
+}
