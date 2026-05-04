@@ -14,7 +14,7 @@ const samlConfig = {
   callbackUrl: process.env.SAML_CALLBACK_URL || "http://localhost:3000/api/auth/saml/callback",
   // Kita bungkus sertifikat dengan format PEM yang sangat rapi
   idpCert: `-----BEGIN CERTIFICATE-----\n${cleanCert(process.env.SAML_IDP_CERT)}\n-----END CERTIFICATE-----`,
-  wantAssertionsSigned: true, // Kita nyalakan lagi agar sinkron dengan Keycloak
+  wantAssertionsSigned: false, // Dimatikan sementara untuk testing
   wantAuthnRequestsSigned: false,
 };
 
