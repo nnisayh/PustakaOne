@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     console.log("Final assigned role:", samlRole);
 
     const [rows]: any = await db.query(
-      "SELECT id, nama, email, role FROM users WHERE email = ?",
+      "SELECT id, name, email, role FROM users WHERE email = ?",
       [email]
     );
 
@@ -45,10 +45,10 @@ export async function POST(req: Request) {
     } else {
       const defaultName = (profile as any).attributes?.name || email.split('@')[0];
       const [result]: any = await db.query(
-        "INSERT INTO users (nama, email, role, password) VALUES (?, ?, ?, ?)",
+        "INSERT INTO users (name, email, role, password) VALUES (?, ?, ?, ?)",
         [defaultName, email, samlRole, 'SSO_USER']
       );
-      userData = { id: result.insertId, nama: defaultName, email, role: samlRole };
+      userData = { id: result.insertId, name: defaultName, email, role: samlRole };
     }
 
     // Tentukan URL tujuan
