@@ -22,9 +22,10 @@ export async function POST(req) {
       const maxAge = adminData.role === 'admin' ? SESSION_DURATION.ADMIN : SESSION_DURATION.USER;
 
       const response = NextResponse.json({ success: true, user: adminData });
+      const isHttps = process.env.NEXTAUTH_URL?.startsWith("https") || false;
       response.cookies.set("auth_session", JSON.stringify(adminData), {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: isHttps,
         sameSite: "lax",
         maxAge: maxAge,
         path: "/",
@@ -35,7 +36,7 @@ export async function POST(req) {
     // 2. CEK KE DATABASE LOKAL (Manual Login)
     // Kita cari user berdasarkan email di database kita sendiri
     const [rows] = await db.query(
-      "SELECT id, nama, email, role, password FROM users WHERE email=?",
+      "SELECT id, name, email, role, password FROM users WHERE email=?",
       [email]
     );
 
@@ -48,7 +49,7 @@ export async function POST(req) {
       if (isPasswordMatch) {
         const userData = {
           id: user.id,
-          nama: user.nama,
+          nama: user.name, // Ubah ke name dari DB
           email: user.email,
           role: user.role
         };
@@ -61,9 +62,10 @@ export async function POST(req) {
 
         const response = NextResponse.json({ success: true, user: userData });
         
+        const isHttps = process.env.NEXTAUTH_URL?.startsWith("https") || false;
         response.cookies.set("auth_session", JSON.stringify(userData), {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: isHttps,
           sameSite: "lax",
           maxAge: maxAge,
           path: "/",
