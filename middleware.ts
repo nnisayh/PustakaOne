@@ -49,25 +49,26 @@ export function middleware(request: NextRequest) {
   // 3. Redirection Logic
   const isAuthPage = pathname === '/login' || pathname === '/admin-login' || pathname === '/select-institution'
   const isLandingPage = pathname === '/'
+  const baseUrl = process.env.NEXTAUTH_URL || request.url;
 
   if (user) {
     // Redirect away from landing/login if already authenticated
     if (isLandingPage || isAuthPage) {
       const target = user.role === 'admin' ? '/admin' : '/dashboard'
-      return NextResponse.redirect(new URL(target, request.url))
+      return NextResponse.redirect(new URL(target, baseUrl))
     }
 
     // Role-based protection for /admin
     if (pathname.startsWith('/admin') && user.role !== 'admin') {
-      return NextResponse.redirect(new URL('/forbidden', request.url))
+      return NextResponse.redirect(new URL('/forbidden', baseUrl))
     }
   } else {
     // Block access to private routes if not logged in
     if (pathname.startsWith('/admin') && pathname !== '/admin-login') {
-      return NextResponse.redirect(new URL('/admin-login', request.url))
+      return NextResponse.redirect(new URL('/admin-login', baseUrl))
     }
     if (pathname.startsWith('/dashboard')) {
-      return NextResponse.redirect(new URL('/login', request.url))
+      return NextResponse.redirect(new URL('/login', baseUrl))
     }
   }
 

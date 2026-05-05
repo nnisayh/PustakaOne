@@ -62,7 +62,8 @@ export async function POST(req: Request) {
     
     const maxAge = userData.role === 'admin' ? SESSION_DURATION.ADMIN : SESSION_DURATION.USER;
     
-    const response = NextResponse.redirect(new URL(redirectUrl, req.url), { status: 303 });
+    const baseUrl = process.env.NEXTAUTH_URL || req.url;
+    const response = NextResponse.redirect(new URL(redirectUrl, baseUrl), { status: 303 });
     
     // Simpan di Cookie
     response.cookies.set("auth_session", JSON.stringify(userData), {
