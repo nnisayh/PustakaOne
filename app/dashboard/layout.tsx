@@ -39,29 +39,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         const parsedUser = JSON.parse(saved);
         setUser(parsedUser);
 
-        // --- LOGIC INACTIVITY (1 Menit untuk Testing) ---
-        let timeout: NodeJS.Timeout;
-        const resetTimer = () => {
-          clearTimeout(timeout);
-          // Set ke 1 Menit (60000 ms)
-          timeout = setTimeout(() => {
-            handleLogout(); // Langsung logout tanpa alert
-          }, 60000); 
-        };
-
-        // Pasang sensor gerakan
-        window.addEventListener('mousemove', resetTimer);
-        window.addEventListener('keypress', resetTimer);
-        window.addEventListener('click', resetTimer);
-        
-        resetTimer();
-
-        return () => {
-          window.removeEventListener('mousemove', resetTimer);
-          window.removeEventListener('keypress', resetTimer);
-          window.removeEventListener('click', resetTimer);
-          clearTimeout(timeout);
-        };
+        // Logic inactivity dihapus dari sini karena dipindah ke useEffect di bawah
       } catch (e) {
         console.error("Error parsing user data:", e);
         localStorage.removeItem("user");
@@ -90,6 +68,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       if (match) setCurrentInst(match)
     }
   }, [router])
+
+  // --- LOGIC INACTIVITY SENSOR ---
+  useEffect(() => {
+    if (!user) return;
+
+    let timeout: NodeJS.Timeout;
+    const resetTimer = () => {
+      clearTimeout(timeout);
+      // 1 Menit (60000 ms)
+      timeout = setTimeout(() => {
+        handleLogout();
+      }, 60000);
+    };
+
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keypress', resetTimer);
+    window.addEventListener('click', resetTimer);
+    
+    resetTimer();
+
+    return () => {
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keypress', resetTimer);
+      window.removeEventListener('click', resetTimer);
+      clearTimeout(timeout);
+    };
+  }, [user]);
 
   if (!user) return null // or a sexy loading spinner
 

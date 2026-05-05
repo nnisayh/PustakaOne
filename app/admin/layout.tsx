@@ -40,27 +40,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       } else {
         setUser(parsedUser)
         
-        // --- LOGIC INACTIVITY (1 Menit untuk Testing) ---
-        let timeout: NodeJS.Timeout;
-        const resetTimer = () => {
-          clearTimeout(timeout);
-          timeout = setTimeout(() => {
-            handleLogout();
-          }, 60000); 
-        };
-
-        window.addEventListener('mousemove', resetTimer);
-        window.addEventListener('keypress', resetTimer);
-        window.addEventListener('click', resetTimer);
-        
-        resetTimer();
-
-        return () => {
-          window.removeEventListener('mousemove', resetTimer);
-          window.removeEventListener('keypress', resetTimer);
-          window.removeEventListener('click', resetTimer);
-          clearTimeout(timeout);
-        };
+        // Inactivity logic dipindah ke useEffect di bawah
       }
     } else {
       router.push('/admin-login')
@@ -70,6 +50,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       document.documentElement.classList.remove('admin-mode')
     }
   }, [router])
+
+  // --- LOGIC INACTIVITY SENSOR ---
+  useEffect(() => {
+    if (!user) return;
+
+    let timeout: NodeJS.Timeout;
+    const resetTimer = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        handleLogout();
+      }, 60000);
+    };
+
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keypress', resetTimer);
+    window.addEventListener('click', resetTimer);
+    
+    resetTimer();
+
+    return () => {
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keypress', resetTimer);
+      window.removeEventListener('click', resetTimer);
+      clearTimeout(timeout);
+    };
+  }, [user]);
 
   // Close mobile sidebar on route change
   useEffect(() => { setIsSidebarOpen(false) }, [pathname])
