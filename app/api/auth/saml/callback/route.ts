@@ -66,9 +66,10 @@ export async function POST(req: Request) {
     const response = NextResponse.redirect(new URL(redirectUrl, baseUrl), { status: 303 });
     
     // Simpan di Cookie
+    const isHttps = process.env.NEXTAUTH_URL?.startsWith("https") || false;
     response.cookies.set("auth_session", JSON.stringify(userData), {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: isHttps,
       sameSite: "lax",
       maxAge: maxAge,
       path: "/",
