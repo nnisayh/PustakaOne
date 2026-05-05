@@ -39,11 +39,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         const parsedUser = JSON.parse(saved);
         setUser(parsedUser);
 
-        // --- LOGIC INACTIVITY (Aktif untuk SEMUA saat testing) ---
+        // --- LOGIC INACTIVITY (1 Menit untuk Testing) ---
         let timeout: NodeJS.Timeout;
         const resetTimer = () => {
           clearTimeout(timeout);
-          // Set ke 60 detik (1 menit) untuk testing
+          // Set ke 1 Menit (60000 ms)
           timeout = setTimeout(() => {
             handleLogout(); // Langsung logout tanpa alert
           }, 60000); 
