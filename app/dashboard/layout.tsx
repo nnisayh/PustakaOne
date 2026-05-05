@@ -227,10 +227,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="p-5 border-t border-slate-200 dark:border-slate-800/50">
           <div className="flex items-center gap-3 px-4 py-3 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl bg-slate-50 dark:bg-slate-800/40 mb-3 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-sm uppercase shadow-sm">
-              {user.nama.charAt(0)}
+              {(user.name || user.nama || "U").charAt(0)}
             </div>
             <div className="overflow-hidden flex-1">
-              <p className="text-xs font-bold text-primary dark:text-slate-200 truncate">{user.nama}</p>
+              <p className="text-xs font-bold text-primary dark:text-slate-200 truncate">{user.name || user.nama}</p>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate tracking-wide">{user.email}</p>
             </div>
           </div>
@@ -355,10 +355,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
-                  <div className="w-full h-full flex items-center justify-center text-xs font-bold">{user.nama.charAt(0)}</div>
+                  <div className="w-full h-full flex items-center justify-center text-xs font-bold">{(user.name || user.nama || "U").charAt(0)}</div>
                 </div>
                 <div className="overflow-hidden flex-1">
-                  <p className="text-xs font-bold text-primary dark:text-white truncate">{user.nama}</p>
+                  <p className="text-xs font-bold text-primary dark:text-white truncate">{user.name || user.nama}</p>
                   <p className="text-[10px] text-slate-500 truncate">{user.email}</p>
                 </div>
               </div>
@@ -402,7 +402,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
           <div className="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 p-0.5">
             <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white text-[10px] font-bold">
-              {user.nama.charAt(0)}
+              {(user.name || user.nama || "U").charAt(0)}
             </div>
           </div>
         </header>
