@@ -16,6 +16,7 @@ const samlConfig = {
   idpCert: `-----BEGIN CERTIFICATE-----\n${cleanCert(process.env.SAML_IDP_CERT)}\n-----END CERTIFICATE-----`,
   wantAssertionsSigned: false, // Dimatikan karena Sign Assertions di Keycloak default-nya OFF
   wantAuthnRequestsSigned: false,
+  acceptedClockSkewMs: 120000, // Toleransi perbedaan waktu 2 menit
 };
 
 export const saml = new SAML(samlConfig);

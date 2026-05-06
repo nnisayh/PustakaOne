@@ -26,10 +26,24 @@ async function setupDatabase() {
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
     await connection.query(createTableQuery);
+
+    console.log("Memastikan kolom 'role' ada di tabel 'users'...");
+    try {
+      await connection.query("ALTER TABLE users ADD COLUMN role VARCHAR(50) DEFAULT 'user'");
+      console.log("Kolom 'role' berhasil ditambahkan.");
+    } catch (e: any) {
+      // Ignore error if column already exists (Error code 1060: Duplicate column name)
+      if (e.code !== 'ER_DUP_FIELDNAME') {
+        console.error("Gagal menambahkan kolom role:", e);
+      } else {
+        console.log("Kolom 'role' sudah ada.");
+      }
+    }
 
     console.log("Setup Database berhasil! Tabel 'users' siap digunakan.");
     
